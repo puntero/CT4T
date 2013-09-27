@@ -42,7 +42,7 @@
                 query.setPublication($scope.publicationId);
             }
             if ($scope.schemaId) {
-                query.addSchema($scope.schemaId);
+                query.addSchemaId($scope.schemaId);
             }
             if ($scope.max) {
                 query.setLimit($scope.max);
@@ -57,6 +57,9 @@
         }
     ]);
 
+    /**
+    * Gets a component link dynamically.
+    */
     application.directive("tridionComponentLink", function () {
         return {
             restrict: 'EA',
@@ -113,9 +116,8 @@
             return {
                 controller: "ComponentPresentationsController",
                 restrict: 'EA',
-                template: '<div><div ng-repeat="model in models" ng-include="getTemplateUrl()"></div></div>',
+                template: '<div ng-repeat="model in models" ng-include="getTemplateUrl()"></div>',
                 transclude: true,
-                replace: true,
                 scope: {
                     max: "=",
                     publicationId: "=",

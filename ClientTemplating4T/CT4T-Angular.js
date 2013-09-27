@@ -42,7 +42,7 @@
                 query.setPublication($scope.publicationId);
             }
             if ($scope.schemaId) {
-                query.addSchema($scope.schemaId);
+                query.addSchemaId($scope.schemaId);
             }
             if ($scope.max) {
                 query.setLimit($scope.max);

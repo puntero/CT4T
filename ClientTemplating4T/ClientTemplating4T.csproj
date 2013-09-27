@@ -21,6 +21,10 @@
     <Content Include="ClientTemplating4T.js">
       <DependentUpon>ClientTemplating4T.ts</DependentUpon>
     </Content>
+    <TypeScriptCompile Include="CT4T-Angular.ts" />
+    <Content Include="CT4T-Angular.js">
+      <DependentUpon>CT4T-Angular.ts</DependentUpon>
+    </Content>
     <Content Include="default-old.htm" />
     <Content Include="default.htm" />
     <Content Include="web.config" />

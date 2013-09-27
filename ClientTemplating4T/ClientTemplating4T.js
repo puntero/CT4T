@@ -3,17 +3,25 @@
 */
 var ClientTemplating4T;
 (function (ClientTemplating4T) {
-    function getComponent(publicationId, componentId, cb) {
-        $.getJSON("/data/fake-service.js", function (result) {
-            var length = result.results.length, component;
+    var context = new Tridion.ContentDelivery.ContentDeliveryService({
+        name: 'oData',
+        oDataServiceHost: 'http://ec2-176-34-172-61.eu-west-1.compute.amazonaws.com:88/odata.svc'
+    });
 
-            while (length--) {
-                component = result.results[length];
-                if (component.publication === publicationId && component.id === componentId) {
-                    return cb(null, component);
+    function getComponent(publicationId, componentId, cb) {
+        context.onReady(function () {
+            context.ComponentPresentations.filter(function (cp) {
+                return cp.ComponentId === this.componentId && cp.PublicationId === this.publicationId;
+            }, { publicationId: publicationId, componentId: componentId }).map(function (cp) {
+                return cp.PresentationContent;
+            }).toArray(function (cps) {
+                if (cps.length > 0) {
+                    console.log(cps, JSON.parse(cps[0]));
+                    cb(null, JSON.parse(cps[0]));
+                } else {
+                    cb(null, null);
                 }
-            }
-            cb(null, null);
+            });
         });
     }
     ClientTemplating4T.getComponent = getComponent;
@@ -25,31 +33,64 @@ var ClientTemplating4T;
     * @param {function} cb The callback function once components are retrieved. (error, components).
     */
     function getComponents(query, cb) {
-        var results = [];
+        context.onReady(function () {
+            var components = context.QueryComponentPresentations;
 
-        $.getJSON("/data/fake-service.js", function (result) {
-            var length = result.results.length, component;
-
-            while (length--) {
-                component = result.results[length];
-                if (query.publicationId) {
-                    if (component.publication !== query.publicationId) {
-                        continue;
-                    }
-                }
-                if (query.schemas) {
-                    if (query.schemas.indexOf(component.schema) === -1) {
-                        continue;
-                    }
-                }
-                results[results.length] = component;
-
-                if (query.limit && results.length >= query.limit) {
-                    break;
-                }
+            if (query.publicationId) {
+                components = components.filter(function (cp) {
+                    return cp.PublicationId === query.publicationId;
+                }, { query: query });
             }
-            cb(null, results);
+
+            /*
+            if (query.schemaIds) {
+            if (query.schemaIds.length === 1) {
+            components = components.filter(function (cp) {
+            return cp.ItemSchema === query.schemaIds[0];
+            }, { query: query });
+            } else {
+            components = components.filter(function (cp) {
+            return cp.ItemSchema in query.schemaIds;
+            }, { query: query });
+            }
+            }
+            */
+            components.map(function (cp) {
+                return cp.PresentationContent;
+            }).toArray(function (cps) {
+                var length = cps.length;
+                while (length--) {
+                    cps[length] = JSON.parse(cps[length]);
+                }
+                cb(null, cps);
+            });
         });
+        /*var results: any[] = [];
+        
+        $.getJSON("/data/fake-service.js", function (result) {
+        var length = result.results.length,
+        component: any;
+        
+        while (length--) {
+        component = result.results[length];
+        if (query.publicationId) {
+        if (component.publication !== query.publicationId) {
+        continue;
+        }
+        }
+        if (query.schemas) {
+        if (query.schemas.indexOf(component.schema) === -1) {
+        continue;
+        }
+        }
+        results[results.length] = component;
+        
+        if (query.limit && results.length >= query.limit) {
+        break;
+        }
+        }
+        cb(null, results);
+        });*/
     }
     ClientTemplating4T.getComponents = getComponents;
 
@@ -81,11 +122,11 @@ var ClientTemplating4T;
         /**
         * Adds a specific schema.
         */
-        ComponentQuery.prototype.addSchema = function (schemaId) {
-            if (!this.schemas) {
-                this.schemas = [];
+        ComponentQuery.prototype.addSchemaId = function (schemaId) {
+            if (!this.schemaIds) {
+                this.schemaIds = [];
             }
-            this.schemas[this.schemas.length] = schemaId;
+            this.schemaIds[this.schemaIds.length] = schemaId;
 
             return this;
         };
@@ -122,3 +163,5 @@ var ClientTemplating4T;
     })();
     ClientTemplating4T.ComponentQuery = ComponentQuery;
 })(ClientTemplating4T || (ClientTemplating4T = {}));
+
+console.log("ClientTemplating4T:", ClientTemplating4T);

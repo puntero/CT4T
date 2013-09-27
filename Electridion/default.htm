@@ -10,7 +10,7 @@
 
            <tridion:component-presentation publication-id="69" component-id="7004" view="promotion"></tridion:component-presentation>
 
-           <tridion:component-presentations publication-id="69" schema-id="18" max="3" view="promotion"></tridion:component-presentations>
+           <tridion:component-presentations publication-id="69" schema-id="6178" max="3" view="promotion"></tridion:component-presentations>
                    
            <tridion:component-link><img src="test" />Test</tridion:component-link>       
                                               
@@ -18,8 +18,15 @@
         <script type="text/javascript" src="/system/js/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="/system/js/jquery-ui-1.8.5.custom.min.js"></script>
         <script type="text/javascript" src="/system/js/json2.min.js"></script>
+        <script type="text/javascript" src="/system/js/datajs-1.0.3.min.js"></script>
+        <script type="text/javascript" src="/system/js/jaydata.min.js"></script>
+        <script type="text/javascript" src="/system/js/cdws.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
         <script type="text/javascript" src="/system/js/ClientTemplating4T.js"></script>
         <script type="text/javascript" src="/system/js/CT4T-Angular.js"></script>
+        <script>var context = new Tridion.ContentDelivery.ContentDeliveryService({
+    name: 'oData',
+    oDataServiceHost: 'http://ec2-176-34-172-61.eu-west-1.compute.amazonaws.com:88/odata.svc/'
+});</script>
     </body>
 </html>
