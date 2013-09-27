@@ -205,6 +205,10 @@
 		    'type': String,
             'computed' : true
 		},
+		'ItemLastPublish' : {
+		    'type': Date,
+            'computed' : true
+		},
 		'Publication' : {
 			'type' : String,
 			'computed' : true

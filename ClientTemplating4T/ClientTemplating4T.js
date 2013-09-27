@@ -36,29 +36,41 @@ var ClientTemplating4T;
         context.onReady(function () {
             var components = context.QueryComponentPresentations;
 
+            if (query.orderBy) {
+                components = components.orderBy("it." + query.orderBy);
+            } else if (query.orderByDesc) {
+                components = components.orderByDescending("it." + query.orderByDesc);
+            }
+
             if (query.publicationId) {
                 components = components.filter(function (cp) {
-                    return cp.PublicationId === query.publicationId;
+                    return cp.Publication === this.query.publicationId;
                 }, { query: query });
             }
 
-            /*
             if (query.schemaIds) {
-            if (query.schemaIds.length === 1) {
-            components = components.filter(function (cp) {
-            return cp.ItemSchema === query.schemaIds[0];
-            }, { query: query });
-            } else {
-            components = components.filter(function (cp) {
-            return cp.ItemSchema in query.schemaIds;
-            }, { query: query });
+                if (query.schemaIds.length === 1) {
+                    components = components.filter(function (cp) {
+                        return cp.ItemSchema === this.query.schemaIds[0];
+                    }, { query: query });
+                } else {
+                    components = components.filter(function (cp) {
+                        return cp.ItemSchema in this.query.schemaIds;
+                    }, { query: query });
+                }
             }
-            }
-            */
-            components.map(function (cp) {
+
+            components = components.map(function (cp) {
                 return cp.PresentationContent;
-            }).toArray(function (cps) {
+            });
+
+            if (query.limit) {
+                components = components.take(query.limit);
+            }
+
+            components.toArray(function (cps) {
                 var length = cps.length;
+
                 while (length--) {
                     cps[length] = JSON.parse(cps[length]);
                 }
