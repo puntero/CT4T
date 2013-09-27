@@ -1,0 +1,30 @@
+<Labels>
+  <Label id="Features" value="Características" />
+  <Label id="Specifications" value="Especificaciones" />
+  <Label id="Downloads" value="Descargas" />
+  <Label id="RelatedProductsHeading" value="Asimismo, puede consultar:" />
+  <Label id="HighlightedProducts" value="Más Popular" />
+  <Label id="RecommendedProducts" value="Recomendado" />
+  <Label id="Share" value="Compartir" />
+  <Label id="NewestProducts" value="Nuevos Productos" />
+  <Label id="Events" value="Eventos" />
+  <Label id="JumpToNavigation" value="Mover a la navegación" />
+  <Label id="ChooseYourLocation" value="Seleccione Su País" />
+  <Label id="Search" value="Buscar" />
+  <Label id="Details" value="Usuario" />
+  <Label id="RegisterText" value="Si usted no tiene un inicio de sesión, haga clic aquí para registrarse" />
+  <Label id="Submit" value="Submit" />
+  <Label id="Language" value="Language" />
+  <Label id="ProductsAndServices" value="What products and ideas are you interested in?" />
+  <Label id="Interest" value="Which of the following best describe your interest?" />
+  <Label id="Gender" value="Gender" />
+  <Label id="EmailAddress" value="Email Address" />
+  <Label id="Password" value="Password" />
+  <Label id="FirstName" value="First Name" />
+  <Label id="LastName" value="Last Name" />
+  <Label id="City" value="City" />
+  <Label id="Company" value="Company" />
+  <Label id="SubscriptionInvalidPParam" value="We cannot find your profile (invalid P parameter)" />
+  <Label id="GeneralProcessingError" value="An error occurred - please try again later" />
+  <Label id="ContactWithEmailAlreadyExists" value="A registration with the Email you entered already exists, please use another email address." />
+</Labels>

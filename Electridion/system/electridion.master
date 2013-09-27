@@ -1,0 +1,140 @@
+<%@ Master Language="C#" Inherits="Electridion.Web.UI.ElectridionMasterPage" %>
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    	<meta http-equiv="Content-Type" content="text/xhtml+xml;charset=utf-8;" />
+        <link rel="stylesheet" type="text/css" href="/system/css/jquery-ui-1.7.2.custom.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="/system/css/ui.stars.min.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="/system/css/electridion.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="/system/webfonts/museosans_500_macroman/stylesheet.css" media="all" />
+    	<asp:ContentPlaceHolder id="head" runat="server"/>
+    </head>
+    <body class="<%=bodyClass%>" id="tcm:3-1346-64" >
+    	<form runat="server">
+		<div id="canvas">
+                <p style="display:none;"><a href="#utility_nav">Mover a la navegación</a></p>
+                <div id="wrapper">
+                	<asp:ContentPlaceHolder id="main" runat="server"/>
+                </div>
+    			<div id="header">
+                    <div id="utility_nav">    
+                            <ul>
+                                <li>
+                                    <asp:LoginView id="LoginView1" runat="server">
+                                        <AnonymousTemplate>
+                                            <a href="#" id="login">Login/Register</a>
+                                        </AnonymousTemplate>
+                                        <LoggedInTemplate>
+                                            <a href="/subscription/update.aspx"><asp:LoginName id="LoginName1" runat="Server"></asp:LoginName></a> - <asp:LoginStatus runat="server" />
+                                        </LoggedInTemplate>
+                                    </asp:LoginView>
+                                </li>
+                                <li>
+	<tridion:ComponentLink runat="server" PageURI="tcm:68-6030-64" ComponentURI="tcm:68-2850" TemplateURI="tcm:0-0-0" AddAnchor="false" LinkText="Póngase en contacto con nosotros" LinkAttributes="" TextOnFail="true"/></li>
+                                <li id="select_language" class="selector">
+                                    <div>
+                                          Seleccione Su País: 
+                                          <a onclick="switchLocation('com')"><img src="/Images/us.png"   border="0" alt="United States" /></a>&nbsp;
+                                          <a onclick="switchLocation('mx')"><img src="/Images/mx.png"   border="0" alt="Mexico" /></a>
+										  <script type="text/javascript" language="javascript">
+										  	function switchLocation(newDomain)
+										  	{
+										  		var domain = window.location.host;
+										  		if (domain.indexOf('siteedit') > 0)
+										  		{
+										  			//do something else for SiteEdit
+										  		}
+										  		else
+										  		{
+										  			pos = domain.lastIndexOf(".");
+										  			newDomain = domain.substr(0, pos + 1) + newDomain;
+													window.location = String(window.location).replace(domain,newDomain);
+										  		}
+										  	}
+										  </script>
+                                  </div>
+                                </li>
+                              <li id="medium_text"><a href="#"></a></li>
+                              <li id="large_text"><a href="#"></a></li>
+                              <li id="ClaimStore"><a href="#claimstore" class="dialog-trigger dialog-modal">[c]</a></li>
+                        </ul>
+                                    
+                    </div>
+                    <div id="logo">
+                       <p><a href="/"><img src="/Images/logo.gif"  alt="" style="border-width:0px;" /></a></p>                        
+                    </div>
+                    <div class="global_search">          
+                        <fieldset>
+                            <input ID="searchinput" class="textfield" />
+                            <input type="submit" name="SearchButton" value="Buscar" class="button" />
+                        </fieldset>
+                    </div>
+                    <div id="global_nav">                        
+                        <ul>
+                            <asp:Xml ID="TopNav" runat="server" DocumentSource="~/electridion.sitemap" TransformSource="~/system/xslt/topnav.xslt"></asp:Xml>
+                            
+                        </ul>         
+                    </div>
+    			</div>
+                
+                <div id="footer">               
+                    <ul class="left">
+                    	<li>
+	<tridion:ComponentLink runat="server" PageURI="tcm:68-6030-64" ComponentURI="tcm:68-2843" TemplateURI="tcm:0-0-0" AddAnchor="false" LinkText="Propiedad intelectual 2012 Electridion" LinkAttributes="" TextOnFail="true"/></li>
+
+<li>
+	<a href="/">Página principal</a>
+</li>
+
+<li>
+	<tridion:ComponentLink runat="server" PageURI="tcm:68-6030-64" ComponentURI="tcm:68-2850" TemplateURI="tcm:0-0-0" AddAnchor="false" LinkText="Póngase en contacto con nosotros" LinkAttributes="" TextOnFail="true"/></li>
+
+<li>
+	<tridion:ComponentLink runat="server" PageURI="tcm:68-6030-64" ComponentURI="tcm:68-2842" TemplateURI="tcm:0-0-0" AddAnchor="false" LinkText="Empleo" LinkAttributes="" TextOnFail="true"/></li>
+
+<li>
+	<tridion:ComponentLink runat="server" PageURI="tcm:68-6030-64" ComponentURI="tcm:68-1345" TemplateURI="tcm:0-0-0" AddAnchor="false" LinkText="Acerca de Electridion" LinkAttributes="" TextOnFail="true"/></li>
+
+<li>
+	<tridion:ComponentLink runat="server" PageURI="tcm:68-6030-64" ComponentURI="tcm:68-2846" TemplateURI="tcm:0-0-0" AddAnchor="false" LinkText="Política de confidencialidad" LinkAttributes="" TextOnFail="true"/></li>
+                    </ul>
+                    <p style="clear:both;margin:1em 0;" class="siteworx right"><img src="/Images/design_by_siteworx.png"  alt="SiteWorx logo" /></p>
+                 </div>
+               
+   			</div>
+        
+		</form>
+        <div class="ui-corner-all" id="login_screen" style="display:none;">
+			<div id="social_media_login">
+				<p><a href="/subscription">Si usted no tiene un inicio de sesión, haga clic aquí para registrarse</a></p>
+			</div>
+			<div id="login_form">
+            	<form action="." method="post">
+				<fieldset>
+					<p><label for="username">Email Address</label><input id="username" type="text" class="textfield" name="username" /></p>
+					<p><label for="password">Password</label><input id="password" class="last textfield" type="password" name="password" /></p>
+					<br/>
+					<p><input type="submit" class="button blue" id="login" value="Login"/></p>
+				</fieldset>
+				</form>
+			</div>
+		</div>
+        <div id="fb-root"></div>
+        <script type="text/javascript" src="/system/js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/system/js/jquery-ui-1.8.5.custom.min.js"></script>
+        <script type="text/javascript" src="/system/js/json2.min.js"></script>
+        <%-- 2013/07/23 removed Cufon font-replacement scripts in favor of basic font-face CSS:
+        <script type="text/javascript" src="/system/js/cufon-yui.js"></script>
+        <script type="text/javascript" src="/system/js/Bleeding_Cowboy_400.font.js"></script>
+        <script type="text/javascript" src="/system/js/OCR_A_Extended_400.font.js"></script>
+        <script type="text/javascript" src="/system/js/MuseoSans500_400.font.js"></script>
+        --%>
+        <script type="text/javascript" src="/system/js/jquery.jcarousel.pack.js"></script>
+        <script type="text/javascript" src="/system/js/ui.stars.min.js"></script>
+        <script type="text/javascript" src="/system/js/loopedslider.js"></script>
+        <script type="text/javascript" src="/system/js/sexy-bookmarks-public.js"></script>
+        <script type="text/javascript" src="/system/js/electridion.js"></script>
+        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f79f27f40b61783"></script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="http://include.jaydata.org/datajs-1.0.3.js"></script>
+    <script src="http://include.jaydata.org/jaydata.js"></script>
+    <script>
+        $data.Entity.extend("ComponentPresentation", {
+            PublicationId: { type: "int" },
+            ItemId: { type: "int" }
+        });
+
+        $data.EntityContext.extend("Templates", {
+            ComponentPresentations: { type: $data.EntitySet, elementType: ComponentPresentation }
+        });
+
+        var tridion = new Templates('http://localhost:1111/odata.svc/Templates');
+        /*
+        tridion.onReady(function () {
+            tridion.ComponentPresentations
+                .filter(function (cp) {
+
+                })
+            //Work with todoDB now
+            todoDB.Todos
+                    .filter(function (todo) {
+                        return todo.Completed == true ||
+                                todo.Task.startsWith("Step2")
+                    })
+                    .forEach(function (todo) {
+                        yourTemplate.render(todo);
+                    });
+        });
+        */
+    </script>
+</head>
+<body>
+    <h1>TypeScript HTML App</h1>
+
+    <div id="content"></div>
+</body>
+</html>
