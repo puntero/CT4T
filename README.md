@@ -1,4 +1,4 @@
 CT4T
 ====
 
-Component Templating For Tridion
+Clientside Templating For Tridion

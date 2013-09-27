@@ -1,9 +1,15 @@
 declare var $: any;
+declare var Tridion: any;
 
 /**
  * CT4T Library.
  */
 module ClientTemplating4T {
+
+    var context: any = new Tridion.ContentDelivery.ContentDeliveryService({
+        name: 'oData',
+        oDataServiceHost: 'http://ec2-176-34-172-61.eu-west-1.compute.amazonaws.com:88/odata.svc'
+    });
 
     /**
      * Gets a specific component out.
@@ -15,17 +21,23 @@ module ClientTemplating4T {
     export function getComponent(publicationId: number, componentId: number, cb: (error: any) => void): void
     export function getComponent(publicationId: number, componentId: number, cb: (error: any, component: any) => void): void
     export function getComponent(publicationId: number, componentId: number, cb: (error: any, component?: any) => void): void {
-        $.getJSON("/data/fake-service.js", function (result) {
-            var length = result.results.length,
-                component: any;
-
-            while (length--) {
-                component = result.results[length];
-                if (component.publication === publicationId && component.id === componentId) {
-                    return cb(null, component);
-                }
-            }
-            cb(null, null);
+        context.onReady(function () {
+            context.ComponentPresentations
+                .filter(function (cp) {
+                    return cp.ComponentId === this.componentId && cp.PublicationId === this.publicationId;
+                }, { publicationId: publicationId, componentId: componentId })
+                .map(function (cp) {
+                    return cp.PresentationContent;
+                })
+                .toArray(function (cps: string[]) {
+                    
+                    if (cps.length > 0) {
+                        console.log(cps, JSON.parse(cps[0]));
+                        cb(null, JSON.parse(cps[0]));
+                    } else {
+                        cb(null, null);
+                    }
+                });
         });
     }
 
@@ -36,7 +48,55 @@ module ClientTemplating4T {
      * @param {function} cb The callback function once components are retrieved. (error, components).
      */
     export function getComponents(query: IComponentQuery, cb: (error: any, components?: any[]) => void) {
-        var results: any[] = [];
+
+        context.onReady(function () {
+            var components = context.QueryComponentPresentations;
+
+            if (query.orderBy) {
+                components = components.orderBy("it." + query.orderBy);
+            } else if (query.orderByDesc) {
+                components = components.orderByDescending("it." + query.orderByDesc);
+            }
+
+            if (query.publicationId) {
+                components = components.filter(function (cp) {
+                    return cp.Publication === this.query.publicationId;
+                }, { query: query });
+            }
+
+            
+            if (query.schemaIds) {
+                if (query.schemaIds.length === 1) {
+                    components = components.filter(function (cp) {
+                        return cp.ItemSchema === this.query.schemaIds[0];
+                    }, { query: query });
+                } else {
+                    components = components.filter(function (cp) {
+                        return cp.ItemSchema in this.query.schemaIds;
+                    }, { query: query });
+                }
+            }
+
+
+            components = components.map(function (cp) {
+                return cp.PresentationContent;
+            });
+
+            if (query.limit) {
+                components = components.take(query.limit);
+            }
+
+            components.toArray(function (cps: string[]) {
+                var length = cps.length;
+
+                while (length--) {
+                    cps[length] = JSON.parse(cps[length]);
+                }
+                cb(null, cps);
+            });
+        });
+
+        /*var results: any[] = [];
 
         $.getJSON("/data/fake-service.js", function (result) {
             var length = result.results.length,
@@ -61,7 +121,7 @@ module ClientTemplating4T {
                 }
             }
             cb(null, results);
-        });
+        });*/
     }
 
     export function getComponentPresentation(publicationId, templateId, componentId) {
@@ -83,7 +143,7 @@ module ClientTemplating4T {
         /**
          * The schemas to query on.
          */
-        public schemas: number[];
+        public schemaIds: number[];
 
         /**
          * The keywords to query on.
@@ -105,6 +165,8 @@ module ClientTemplating4T {
          */
         public orderBy: any;
 
+        public orderByDesc: any;
+
         /**
          * The publication to get results from.
          */
@@ -125,11 +187,11 @@ module ClientTemplating4T {
         /**
          * Adds a specific schema.
          */
-        public addSchema(schemaId: number): ComponentQuery {
-            if (!this.schemas) {
-                this.schemas = [];
+        public addSchemaId(schemaId: number): ComponentQuery {
+            if (!this.schemaIds) {
+                this.schemaIds = [];
             }
-            this.schemas[this.schemas.length] = schemaId;
+            this.schemaIds[this.schemaIds.length] = schemaId;
 
             return this;
         }
@@ -173,16 +235,15 @@ interface IComponent {
 }
 
 interface IComponentQuery {
-    schemas: any[];
+    schemaIds: any[];
     keywords: any[];
     metadata: any[];
     orderBy: any;
+    orderByDesc: any;
     publicationId: any;
     limit: number;
     start: number;
 }
-/*
-ourApi.getComponentData(id);
-.getComponents(schemaId); schemaId, keywords, metadata
-*/
-    
+
+
+console.log("ClientTemplating4T:", ClientTemplating4T);

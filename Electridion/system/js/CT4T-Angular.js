@@ -34,19 +34,26 @@
     */
     application.controller("ComponentPresentationsController", [
         "$scope",
+        "$element",
         "CT4T",
-        function ($scope, CT4T) {
+        function ($scope, $element, CT4T) {
             var query = CT4T.query();
 
             if ($scope.publicationId) {
                 query.setPublication($scope.publicationId);
             }
             if ($scope.schemaId) {
-                query.addSchema($scope.schemaId);
+                query.addSchemaId($scope.schemaId);
             }
             if ($scope.max) {
                 query.setLimit($scope.max);
             }
+            if ($element.attr('order-by')) {
+                query.orderBy = $element.attr('order-by');
+            } else if ($element.attr('order-by-desc')) {
+                query.orderByDesc = $element.attr('order-by-desc');
+            }
+
             CT4T.getComponents(query, function (error, components) {
                 if (!$scope.$$phase) {
                     $scope.$apply(function () {
@@ -57,6 +64,9 @@
         }
     ]);
 
+    /**
+    * Gets a component link dynamically.
+    */
     application.directive("tridionComponentLink", function () {
         return {
             restrict: 'EA',
@@ -113,13 +123,14 @@
             return {
                 controller: "ComponentPresentationsController",
                 restrict: 'EA',
-                template: '<div><div ng-repeat="model in models" ng-include="getTemplateUrl()"></div></div>',
+                template: '<div ng-repeat="model in models" ng-include="getTemplateUrl()"></div>',
                 transclude: true,
-                replace: true,
                 scope: {
                     max: "=",
                     publicationId: "=",
                     schemaId: "=",
+                    orderBy: "=",
+                    orderByDesc: "@orderByDesc",
                     view: "@view"
                 },
                 link: function (scope, element, attrs, ctrl) {
