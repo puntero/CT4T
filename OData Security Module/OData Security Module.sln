@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OData Security Module", "OData Security Module.csproj", "{DEBC60D7-C713-4740-9403-3E6D11724D15}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Website", "Website\", "{CA7BB580-748F-41F6-A911-C12A67A8E21A}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{DEBC60D7-C713-4740-9403-3E6D11724D15}|ODataSecurityModule.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/Website"
+		Debug.AspNetCompiler.PhysicalPath = "Website\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Website\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Website"
+		Release.AspNetCompiler.PhysicalPath = "Website\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Website\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "49822"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DEBC60D7-C713-4740-9403-3E6D11724D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEBC60D7-C713-4740-9403-3E6D11724D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEBC60D7-C713-4740-9403-3E6D11724D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEBC60D7-C713-4740-9403-3E6D11724D15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7BB580-748F-41F6-A911-C12A67A8E21A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7BB580-748F-41F6-A911-C12A67A8E21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7BB580-748F-41F6-A911-C12A67A8E21A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7BB580-748F-41F6-A911-C12A67A8E21A}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
