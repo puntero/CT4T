@@ -16,7 +16,6 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="app.css" />
     <TypeScriptCompile Include="ClientTemplating4T.ts" />
     <Content Include="ClientTemplating4T.js">
       <DependentUpon>ClientTemplating4T.ts</DependentUpon>
@@ -28,9 +27,6 @@
     <Content Include="default-old.htm" />
     <Content Include="default.htm" />
     <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\news1.json" />

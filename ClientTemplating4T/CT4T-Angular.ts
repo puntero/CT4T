@@ -56,6 +56,31 @@
                 });
             }
         });
+
+
+
+
+        setInterval(function () {
+            console.log($scope);
+
+
+            CT4T.getComponents(query, function (error, components?) {
+                if (!$scope.$$phase) {
+                    $scope.$apply(function () {
+                        $scope.models = components;
+                    });
+                }
+            })
+
+                $scope.$apply(function () {
+
+                $scope.message = "Timeout called!";
+            });
+        }, 2000);
+
+
+
+
     }]);
 
     /**
