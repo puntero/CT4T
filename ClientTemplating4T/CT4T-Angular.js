@@ -62,21 +62,23 @@
                 }
             });
 
-            setInterval(function () {
-                console.log($scope);
+            if ($scope.polling) {
+                setInterval(function () {
+                    console.log($scope);
 
-                CT4T.getComponents(query, function (error, components) {
-                    if (!$scope.$$phase) {
-                        $scope.$apply(function () {
-                            $scope.models = components;
-                        });
-                    }
-                });
+                    CT4T.getComponents(query, function (error, components) {
+                        if (!$scope.$$phase) {
+                            $scope.$apply(function () {
+                                $scope.models = components;
+                            });
+                        }
+                    });
 
-                $scope.$apply(function () {
-                    $scope.message = "Timeout called!";
-                });
-            }, 2000);
+                    $scope.$apply(function () {
+                        $scope.message = "Timeout called!";
+                    });
+                }, $scope.polling);
+            }
         }
     ]);
 
@@ -146,6 +148,7 @@
                     publicationId: "=",
                     schemaId: "=",
                     orderBy: "=",
+                    polling: "=",
                     orderByDesc: "@orderByDesc",
                     view: "@view"
                 },
